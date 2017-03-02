@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <h1>Hello {{user.name}} {{user.id}}</h1>
+    {%if my_friends|length > 0%}
+    <h2>You have {{my_friends|length}} friends</h2>
+    {% endif %}
+    {% if my_friends|length < 1 %}
+    <h2>You don't have friends yet</h2>
+    {% endif %}
+    <a href="/logout">Logout</a>
+
+
+<h3>Here is the list of your friends</h3>
+  <table>
+    <tr>
+      <th>Alias</th>
+      <th>Action</th>
+    </tr>
+    {%for friend in my_friends%}
+    <tr>
+      <td>{{friend.user_liked.alias}}</td>
+      <td><a href="/view_profile/{{friend.user_liked.id}}"><input type="submit" name="submit" value="View Profile"></a><a href="/remove_friend/{{friend.user_liked.id}}"><input type="submit" name="submit" value="Remove Friend"></a></td>
+    </tr>
+    {% endfor %}
+  </table>
+
+
+  <h3>Other Users not on your friends:</h3>
+      <table>
+        <tr>
+          <th>Alias</th>
+          <th>Action</th>
+        </tr>
+      {%for option in total_users%}
+      <tr>
+        <td><a href="/view_profile/{{option.id}}">{{option.alias}}</a></td>
+        <td><a href="/add_friend/{{option.id}}"><input type="submit" name="submit" value="Add Friend!"></td>
+      </tr>
+      {% endfor %}
+    </table>
+
+  </body>
+</html>
