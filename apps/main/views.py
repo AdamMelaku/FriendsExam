@@ -44,16 +44,18 @@ def login(request):
 
 def register(request):
     if User.objects.validate_user(request.POST):
-        user = User.objects.create(
-        name = request.POST.get("name"),
-        alias = request.POST.get("alias"),
-        date_of_birth = request.POST.get("date_of_birth"),
-        email = request.POST.get("email"),
-        password = bcrypt.hashpw(request.POST.get('password').encode(), bcrypt.gensalt())
-        )
-        request.session["user_id"]=user.id
-        return redirect("/dashboard")
-    messages.error(request,'Invalid credentials. Check for valid email or long enough password')
+        if request.method == 'POST':
+            user = User.objects.create(
+            name = request.POST.get("name"),
+            alias = request.POST.get("alias"),
+            date_of_birth = request.POST.get("date_of_birth"),
+            email = request.POST.get("email"),
+            password = bcrypt.hashpw(request.POST.get('password').encode(), bcrypt.gensalt())
+            )
+            request.session["user_id"]=user.id
+            return redirect("/dashboard")
+        else:
+            messages.error(request,'Invalid credentials. Check for valid email or long enough password')
     return redirect("/")
 
 def add_friend(request, id):
