@@ -53,6 +53,8 @@ def register(request):
         )
         request.session["user_id"]=user.id
         return redirect("/dashboard")
+    else:
+        messages.error(request,'Invalid credentials. Check for valid email or long enough password')
     return redirect("/")
 
 def add_friend(request, id):
