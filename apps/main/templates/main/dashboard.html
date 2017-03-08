@@ -5,44 +5,13 @@
     <title></title>
   </head>
   <body>
-    <h1>Hello {{user.name}} {{user.id}}</h1>
-    {%if my_friends|length > 0%}
-    <h2>You have {{my_friends|length}} friends</h2>
-    {% endif %}
-    {% if my_friends|length < 1 %}
-    <h2>You don't have friends yet</h2>
-    {% endif %}
+    <h1>Hello {{user.name}}</h1>
+    <h1>Your ID is: {{user.id}}</h1>
+    <h1>Your Alias is: {{user.alias}}</h1>
+    <h1>Your Email: {{user.email}}</h1>
+    <h1>Your Date of Birth: {{user.date_of_birth}}</h1>
     <a href="/logout">Logout</a>
 
-
-<h3>Here is the list of your friends</h3>
-  <table>
-    <tr>
-      <th>Alias</th>
-      <th>Action</th>
-    </tr>
-    {%for friend in my_friends%}
-    <tr>
-      <td>{{friend.user_liked.alias}}</td>
-      <td><a href="/view_profile/{{friend.user_liked.id}}"><input type="submit" name="submit" value="View Profile"></a><a href="/remove_friend/{{friend.user_liked.id}}"><input type="submit" name="submit" value="Remove Friend"></a></td>
-    </tr>
-    {% endfor %}
-  </table>
-
-
-  <h3>Other Users not on your friends:</h3>
-      <table>
-        <tr>
-          <th>Alias</th>
-          <th>Action</th>
-        </tr>
-      {%for option in total_users%}
-      <tr>
-        <td><a href="/view_profile/{{option.id}}">{{option.alias}}</a></td>
-        <td><a href="/add_friend/{{option.id}}"><input type="submit" name="submit" value="Add Friend!"></td>
-      </tr>
-      {% endfor %}
-    </table>
 
   </body>
 </html>

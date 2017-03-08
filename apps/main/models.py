@@ -41,9 +41,3 @@ class User(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
     objects = UserManager()
-
-class Friend(models.Model):
-    user_liked = models.ForeignKey(User,related_name="friended")
-    user_liked_by = models.ForeignKey(User,related_name="friended_by")
-    created_at = models.DateTimeField(auto_now_add = True)
-    updated_at = models.DateTimeField(auto_now = True)

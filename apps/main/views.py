@@ -7,29 +7,13 @@ def index(request):
     return render(request,'main/index.html')
 
 def dashboard(request):
-    ids = []
-    num = request.session["user_id"]
-    total_users_options = Friend.objects.filter(user_liked_by=request.session["user_id"])
-
-    for friend in total_users_options:
-        ids.append(friend.user_liked.id)
-
-    revised_user_options=User.objects.exclude(id=request.session["user_id"]).exclude(id__in=ids)
 
     user = User.objects.get(id=request.session["user_id"])
     context = {
     "user":User.objects.get(id=request.session["user_id"]),
-    "total_users": revised_user_options,
-    "my_friends": Friend.objects.filter(user_liked_by=request.session["user_id"]),
     }
     return render(request,'main/dashboard.html',context)
 
-
-def view_profile(request, id):
-    context = {
-    "user":User.objects.get(id=id)
-    }
-    return render(request,'main/profile.html',context)
 
 #Views that process forms
 def login(request):
@@ -57,16 +41,7 @@ def register(request):
          messages.warning(request,'Invalid credentials. Check for valid email or long enough password')
     return redirect("/")
 
-def add_friend(request, id):
-    friend = Friend.objects.create(
-    user_liked = User.objects.get(id=id),
-    user_liked_by = User.objects.get(id=request.session["user_id"])
-    )
-    return redirect ("/dashboard")
 
-def remove(request, id):
-    Friend.objects.filter(user_liked=id).delete()
-    return redirect("/dashboard")
 
 def logout(request):
     request.session.clear()
